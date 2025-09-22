@@ -4,10 +4,6 @@
 [ext_resource type="Script" uid="uid://3xt7hwa53lov" path="res://Scripts/player.gd" id="1_dgdwv"]
 [ext_resource type="Texture2D" uid="uid://byx7a3nhks5wy" path="res://Sprites/Walk.png" id="2_dgdwv"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dgdwv"]
-radius = 8.0
-height = 22.0
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_woxkm"]
 atlas = ExtResource("1_bmk3q")
 region = Rect2(0, 32, 32, 32)
@@ -251,14 +247,21 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgdwv"]
+size = Vector2(10, 4)
+
 [node name="Player" type="CharacterBody2D"]
+z_index = 1
 script = ExtResource("1_dgdwv")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_dgdwv")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(-1, -2)
 sprite_frames = SubResource("SpriteFrames_u2crd")
 animation = &"Walk side"
-frame = 4
-frame_progress = 0.75204426
+frame_progress = 0.11867332
+offset = Vector2(0, -5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_dgdwv")
