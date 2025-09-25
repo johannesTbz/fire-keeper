@@ -24,6 +24,7 @@ tile_map_data = PackedByteArray("AAD//wEAAAAJAAoAAAAAAAEAAAAJAAoAAAABAAEAAAAJAAo
 tile_set = ExtResource("1_wrm1d")
 
 [node name="Player" parent="." instance=ExtResource("2_3dryh")]
+position = Vector2(0, -9)
 
 [node name="PlayerCamera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(5, 5)
@@ -65,4 +66,5 @@ position = Vector2(-29, -38)
 [node name="Tree3" parent="Foliage" instance=ExtResource("3_wowpa")]
 position = Vector2(68, -31)
 
-[node name="Fire" parent="." instance=ExtResource("4_3dryh")]
+[node name="Bonfire" parent="." instance=ExtResource("4_3dryh")]
+position = Vector2(0, 18)
