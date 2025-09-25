@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://c5o57fwbhbdyn"]
+[gd_scene load_steps=10 format=3 uid="uid://c5o57fwbhbdyn"]
 
 [ext_resource type="Texture2D" uid="uid://nw5lfwkp0jlh" path="res://Textures/Maple Tree.png" id="1_t2lb8"]
+[ext_resource type="Texture2D" uid="uid://cpufiifd0xb70" path="res://Sprites/Bonfire_1.png" id="2_l7sa7"]
 [ext_resource type="Texture2D" uid="uid://btg2fdkkissjg" path="res://Sprites/Maple Tree.png" id="2_rsuno"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q1jhm"]
@@ -22,9 +23,15 @@ texture = ExtResource("1_t2lb8")
 6:0/size_in_atlas = Vector2i(2, 2)
 6:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l3oha"]
+texture = ExtResource("2_l7sa7")
+1:1/0 = 0
+2:1/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_07bha"]
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_q1jhm")
+sources/2 = SubResource("TileSetAtlasSource_l3oha")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t2lb8"]
 size = Vector2(14, 13.5)
