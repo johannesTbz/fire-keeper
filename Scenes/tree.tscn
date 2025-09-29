@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://c5o57fwbhbdyn"]
+[gd_scene load_steps=12 format=3 uid="uid://c5o57fwbhbdyn"]
 
+[ext_resource type="Script" uid="uid://dhgoqruls2t4c" path="res://Scripts/tree.gd" id="1_l3oha"]
 [ext_resource type="Texture2D" uid="uid://nw5lfwkp0jlh" path="res://Textures/Maple Tree.png" id="1_t2lb8"]
 [ext_resource type="Texture2D" uid="uid://ch34yp815wpgb" path="res://Textures/Road copiar.png" id="2_l7sa7"]
 [ext_resource type="Texture2D" uid="uid://btg2fdkkissjg" path="res://Sprites/Maple Tree.png" id="2_rsuno"]
@@ -67,8 +68,11 @@ texture = ExtResource("2_rsuno")
 [sub_resource type="TileSet" id="TileSet_l3oha"]
 sources/0 = SubResource("TileSetAtlasSource_l7sa7")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_l7sa7"]
+
 [node name="Tree" type="Node2D"]
 z_index = 1
+script = ExtResource("1_l3oha")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 y_sort_enabled = true
@@ -88,3 +92,12 @@ z_index = -1
 position = Vector2(-8, -9)
 tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 2, 0, 0, 0)
 tile_set = SubResource("TileSet_l3oha")
+
+[node name="HurtboxTree" type="Area2D" parent="TileMapLayer2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer2/HurtboxTree"]
+position = Vector2(8, 7)
+shape = SubResource("CircleShape2D_l7sa7")
+
+[connection signal="body_entered" from="TileMapLayer2/HurtboxTree" to="." method="_on_hurtbox_tree_body_entered"]
+[connection signal="body_exited" from="TileMapLayer2/HurtboxTree" to="." method="_on_hurtbox_tree_body_exited"]

@@ -1,15 +1,27 @@
 extends CharacterBody2D
 
+var enemy_inAttackRange = false
+var enemy_AttackCooldown = true
+var health = 100
+var playerAlive = true
+
+var attack_inpr = false
+
 const speed = 100
 var current_dir = "none"
 
 func _ready():
 	$AnimatedSprite2D.play("Idle front")
 	
-	
-
 func _physics_process(delta):
 	player_movement(delta)
+	enemyAttack()
+	
+	if health <= 0:
+		playerAlive = false #death/respawn screen here
+		health = 0
+		print ("Du dog!")
+		self.queue_free()
 
 func player_movement(delta):
 	
@@ -75,6 +87,25 @@ func play_anim(movement):
 			anim.play("Walk back")
 		elif movement == 0:
 			anim.play("Idle back")
+			
+func player():
+	pass
 		
-	
-	
+func _on_player_hitbox_body_entered(body: Node2D) -> void:
+	if body.has_method("tree"):
+		enemy_inAttackRange = true
+
+
+func _on_player_hitbox_body_exited(body: Node2D) -> void:
+	if body.has_method("tree"):
+		enemy_inAttackRange = false
+		
+func enemyAttack():
+	if enemy_inAttackRange and enemy_AttackCooldown == true:
+		health = health - 10
+		enemy_AttackCooldown = false
+		$attack_cooldown.start()
+		print(health)
+
+func _on_attack_cooldown_timeout() -> void:
+	enemy_AttackCooldown = true
