@@ -99,5 +99,9 @@ tile_set = SubResource("TileSet_l3oha")
 position = Vector2(8, 7)
 shape = SubResource("CircleShape2D_l7sa7")
 
+[node name="Take_damage_cooldown" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="body_entered" from="TileMapLayer2/HurtboxTree" to="." method="_on_hurtbox_tree_body_entered"]
 [connection signal="body_exited" from="TileMapLayer2/HurtboxTree" to="." method="_on_hurtbox_tree_body_exited"]
+[connection signal="timeout" from="Take_damage_cooldown" to="." method="_on_take_damage_cooldown_timeout"]

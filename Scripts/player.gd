@@ -16,6 +16,7 @@ func _ready():
 func _physics_process(delta):
 	player_movement(delta)
 	enemyAttack()
+	attack()
 	
 	if health <= 0:
 		playerAlive = false #death/respawn screen here
@@ -65,28 +66,32 @@ func play_anim(movement):
 		if movement == 1:
 			anim.play("walk side")
 		elif movement == 0:
-			anim.play("Idle side")
+			if attack_inpr == false:
+				anim.play("Idle side")
 	
 	if dir == "left":
 		anim.flip_h = true
 		if movement == 1:
 			anim.play("Walk side")
 		elif movement == 0:
-			anim.play("Idle side")
+			if attack_inpr == false:
+				anim.play("Idle side")
 	
 	if dir == "down":
 		anim.flip_h = false
 		if movement == 1:
 			anim.play("Walk front")
 		elif movement == 0:
-			anim.play("Idle front")
+			if attack_inpr == false:
+				anim.play("Idle front")
 	
 	if dir == "up":
 		anim.flip_h = false
 		if movement == 1:
 			anim.play("Walk back")
 		elif movement == 0:
-			anim.play("Idle back")
+			if attack_inpr == false:
+				anim.play("Idle back")
 			
 func player():
 	pass
@@ -109,3 +114,30 @@ func enemyAttack():
 
 func _on_attack_cooldown_timeout() -> void:
 	enemy_AttackCooldown = true
+	
+func attack():
+	var dir = current_dir
+	
+	if Input.is_action_just_pressed("attack"):
+		Global.player_currently_attacking = true
+		attack_inpr = true
+		if dir == "right":
+			$AnimatedSprite2D.flip_h = false
+			$AnimatedSprite2D.play("Attack side")
+			$deal_attack_timer.start()
+		if dir == "left":
+			$AnimatedSprite2D.flip_h = true
+			$AnimatedSprite2D.play("Attack side")
+			$deal_attack_timer.start()
+		if dir == "down":
+			$AnimatedSprite2D.play("Attack front")
+			$deal_attack_timer.start()
+		if dir == "up":
+			$AnimatedSprite2D.play("Attack back")
+			$deal_attack_timer.start()
+
+
+func _on_deal_attack_timer_timeout() -> void:
+	$deal_attack_timer.stop()
+	Global.player_currently_attacking = false
+	attack_inpr = false
