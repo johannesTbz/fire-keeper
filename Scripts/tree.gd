@@ -35,10 +35,9 @@ func start_fall():
 	$HurtboxTree.monitoring = false
 	$CollisionShape2D.disabled = true
 	
-func _on_AnimationPlayer_animation_finished(anim_name: StringName) -> void:
+func _on_take_damage_cooldown_timeout() -> void:
+	can_take_damage = true	
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "Fall":
 		queue_free()
-	
-func _on_take_damage_cooldown_timeout() -> void:
-	can_take_damage = true
-	
