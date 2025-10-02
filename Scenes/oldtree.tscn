@@ -1,0 +1,140 @@
+[gd_scene load_steps=10 format=3 uid="uid://c5o57fwbhbdyn"]
+
+[ext_resource type="Script" uid="uid://dhgoqruls2t4c" path="res://Scripts/tree.gd" id="1_l3oha"]
+[ext_resource type="Texture2D" uid="uid://btg2fdkkissjg" path="res://Sprites/Maple Tree.png" id="2_rsuno"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rsuno"]
+atlas = ExtResource("2_rsuno")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l7sa7"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"Tree_Falling",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"Tree_Felled",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rsuno")
+}],
+"loop": true,
+"name": &"Tree_standing",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t2lb8"]
+size = Vector2(14, 13.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l7sa7"]
+
+[sub_resource type="Animation" id="Animation_rsuno"]
+resource_name = "Fall"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../AnimatedSprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.09, 0.34, 0.64, 0.87),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -17), Vector2(-5, -15.999998), Vector2(-11, -13.000001), Vector2(-13.999999, -8.999999), Vector2(-17, -1.000001)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../AnimatedSprite2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.09, 0.34, 0.64, 0.87),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.3351032, -0.6702064, -1.0053097, -1.5079645]
+}
+
+[sub_resource type="Animation" id="Animation_l7sa7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-5, -15.999998)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../AnimatedSprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.3351032]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l3oha"]
+_data = {
+&"Fall": SubResource("Animation_rsuno"),
+&"RESET": SubResource("Animation_l7sa7")
+}
+
+[node name="Tree" type="Node2D"]
+z_index = 1
+script = ExtResource("1_l3oha")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-5, -15.999998)
+rotation = -0.3351032
+sprite_frames = SubResource("SpriteFrames_l7sa7")
+animation = &"Tree_standing"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D"]
+position = Vector2(0, 17)
+shape = SubResource("RectangleShape2D_t2lb8")
+
+[node name="HurtboxTree" type="Area2D" parent="."]
+position = Vector2(-8, -9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxTree"]
+position = Vector2(8, 9)
+shape = SubResource("CircleShape2D_l7sa7")
+
+[node name="Take_damage_cooldown" type="Timer" parent="HurtboxTree"]
+wait_time = 0.5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../HurtboxTree/Take_damage_cooldown")
+libraries = {
+&"": SubResource("AnimationLibrary_l3oha")
+}
+
+[connection signal="body_entered" from="HurtboxTree" to="." method="_on_hurtbox_tree_body_entered"]
+[connection signal="body_exited" from="HurtboxTree" to="." method="_on_hurtbox_tree_body_exited"]
+[connection signal="timeout" from="HurtboxTree/Take_damage_cooldown" to="." method="_on_take_damage_cooldown_timeout"]

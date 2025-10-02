@@ -1,107 +1,123 @@
-[gd_scene load_steps=12 format=3 uid="uid://c5o57fwbhbdyn"]
+[gd_scene load_steps=9 format=3 uid="uid://bkq0214of4nun"]
 
-[ext_resource type="Script" uid="uid://dhgoqruls2t4c" path="res://Scripts/tree.gd" id="1_l3oha"]
-[ext_resource type="Texture2D" uid="uid://nw5lfwkp0jlh" path="res://Textures/Maple Tree.png" id="1_t2lb8"]
-[ext_resource type="Texture2D" uid="uid://ch34yp815wpgb" path="res://Textures/Road copiar.png" id="2_l7sa7"]
-[ext_resource type="Texture2D" uid="uid://btg2fdkkissjg" path="res://Sprites/Maple Tree.png" id="2_rsuno"]
+[ext_resource type="Script" uid="uid://dhgoqruls2t4c" path="res://Scripts/tree.gd" id="1_07bha"]
+[ext_resource type="Texture2D" uid="uid://btg2fdkkissjg" path="res://Sprites/Maple Tree.png" id="1_q1jhm"]
+[ext_resource type="Texture2D" uid="uid://nw5lfwkp0jlh" path="res://Textures/Maple Tree.png" id="2_07bha"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q1jhm"]
-texture = ExtResource("1_t2lb8")
-4:0/0 = 0
-4:0/0/y_sort_origin = 16
-5:0/0 = 0
-5:0/0/y_sort_origin = 16
-4:1/0 = 0
-5:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-4:2/0 = 0
-5:2/0 = 0
-8:2/0 = 0
-9:2/0 = 0
-6:0/size_in_atlas = Vector2i(2, 2)
-6:0/0 = 0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q1jhm"]
+size = Vector2(15, 11)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l3oha"]
-texture = ExtResource("2_l7sa7")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
+[sub_resource type="CircleShape2D" id="CircleShape2D_q1jhm"]
+radius = 11.0
 
-[sub_resource type="TileSet" id="TileSet_07bha"]
-physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_q1jhm")
-sources/3 = SubResource("TileSetAtlasSource_l3oha")
+[sub_resource type="Animation" id="Animation_q1jhm"]
+resource_name = "Fall"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -1.5707964, -1.5707964]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_t2lb8"]
-size = Vector2(14, 13.5)
+[sub_resource type="Animation" id="Animation_07bha"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l7sa7"]
-texture = ExtResource("2_rsuno")
-4:0/0 = 0
-5:0/0 = 0
-4:1/0 = 0
-5:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-4:2/0 = 0
-5:2/0 = 0
-8:2/0 = 0
-9:2/0 = 0
-6:2/size_in_atlas = Vector2i(2, 1)
-6:2/0 = 0
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o54b1"]
+_data = {
+&"Fall": SubResource("Animation_q1jhm"),
+&"RESET": SubResource("Animation_07bha")
+}
 
-[sub_resource type="TileSet" id="TileSet_l3oha"]
-sources/0 = SubResource("TileSetAtlasSource_l7sa7")
+[node name="Tree" type="StaticBody2D"]
+script = ExtResource("1_07bha")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_l7sa7"]
+[node name="Body" type="Node2D" parent="."]
 
-[node name="Tree" type="Node2D"]
+[node name="Stam" type="Sprite2D" parent="Body"]
+position = Vector2(-22, -11)
+texture = ExtResource("1_q1jhm")
+centered = false
+offset = Vector2(5, 0)
+region_enabled = true
+region_rect = Rect2(94.92827, 35.96075, 33.273865, 12.039249)
+
+[node name="Krona" type="Sprite2D" parent="Body"]
 z_index = 1
-script = ExtResource("1_l3oha")
+position = Vector2(-16.999998, -46)
+scale = Vector2(1, 0.98571426)
+texture = ExtResource("1_q1jhm")
+centered = false
+region_enabled = true
+region_rect = Rect2(95.108, 0, 33.247, 35.63)
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
-y_sort_enabled = true
-position = Vector2(8, -17)
-tile_map_data = PackedByteArray(0, 0, 255, 255, 255, 255, 0, 0, 6, 0, 0, 0, 0, 0)
-tile_set = SubResource("TileSet_07bha")
-y_sort_origin = 1
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -6.5)
+shape = SubResource("RectangleShape2D_q1jhm")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="HurtboxTree" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(0, -1.25)
-shape = SubResource("RectangleShape2D_t2lb8")
-
-[node name="TileMapLayer2" type="TileMapLayer" parent="."]
-z_index = -1
-position = Vector2(-8, -9)
-tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 2, 0, 0, 0)
-tile_set = SubResource("TileSet_l3oha")
-
-[node name="HurtboxTree" type="Area2D" parent="TileMapLayer2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer2/HurtboxTree"]
-position = Vector2(8, 7)
-shape = SubResource("CircleShape2D_l7sa7")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxTree"]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_q1jhm")
 
 [node name="Take_damage_cooldown" type="Timer" parent="."]
-wait_time = 0.5
+one_shot = true
 
-[connection signal="body_entered" from="TileMapLayer2/HurtboxTree" to="." method="_on_hurtbox_tree_body_entered"]
-[connection signal="body_exited" from="TileMapLayer2/HurtboxTree" to="." method="_on_hurtbox_tree_body_exited"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_o54b1")
+}
+
+[node name="MapleTree" type="Sprite2D" parent="."]
+position = Vector2(-65, -23)
+scale = Vector2(35, 0)
+texture = ExtResource("2_07bha")
+region_enabled = true
+region_rect = Rect2(94.77179, 36.367874, 33.633575, 11.632126)
+
+[connection signal="body_entered" from="HurtboxTree" to="." method="_on_hurtbox_tree_body_entered"]
+[connection signal="body_exited" from="HurtboxTree" to="." method="_on_hurtbox_tree_body_exited"]
 [connection signal="timeout" from="Take_damage_cooldown" to="." method="_on_take_damage_cooldown_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
