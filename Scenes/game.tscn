@@ -57,11 +57,11 @@ shape = SubResource("RectangleShape2D_u52d4")
 
 [node name="Foliage" type="Node" parent="."]
 
-[node name="Bonfire" parent="." instance=ExtResource("4_3dryh")]
-position = Vector2(0, 18)
-
-[node name="Tree" parent="." instance=ExtResource("3_wowpa")]
+[node name="Tree" parent="Foliage" instance=ExtResource("3_wowpa")]
 position = Vector2(44, -39)
 
-[node name="Tree2" parent="." instance=ExtResource("3_wowpa")]
+[node name="Tree2" parent="Foliage" instance=ExtResource("3_wowpa")]
 position = Vector2(-26, -40)
+
+[node name="Firepit" parent="." instance=ExtResource("4_3dryh")]
+position = Vector2(0, 18)

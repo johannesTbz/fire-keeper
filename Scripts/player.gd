@@ -10,6 +10,8 @@ var attack_inpr = false
 const speed = 100
 var current_dir = "none"
 
+@export var inv: Inv
+
 func _ready():
 	$AnimatedSprite2D.play("Idle front")
 	
