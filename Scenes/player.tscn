@@ -401,7 +401,7 @@ script = ExtResource("1_dgdwv")
 y_sort_enabled = true
 position = Vector2(-1, -2)
 sprite_frames = SubResource("SpriteFrames_u2crd")
-animation = &"Attack back"
+animation = &"Walk side"
 offset = Vector2(0, -5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

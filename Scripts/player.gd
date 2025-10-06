@@ -64,7 +64,7 @@ func play_anim(movement):
 	if dir == "right":
 		anim.flip_h = false
 		if movement == 1:
-			anim.play("walk side")
+			anim.play("Walk side")
 		elif movement == 0:
 			if attack_inpr == false:
 				anim.play("Idle side")
